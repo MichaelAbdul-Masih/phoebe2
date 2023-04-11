@@ -98,6 +98,21 @@ jobs:
       run: |
         python -c "import photodynam"
 
+    - name: Setup GNU Fortran
+      uses: modflowpy/install-gfortran-action@v1
+
+    - name: Install jktebop
+      run: |
+        wget https://www.astro.keele.ac.uk/jkt/codes/jktebop-v43.tgz
+        cd jktebop-v43
+        gfortran -o jktebop jktebop.f
+        export PATH=$PATH:$(pwd)
+        cd ..
+
+    - name: Test jktebop install
+      run: |
+        jktebop
+
     - name: Run tests
       run: |
         pytest --verbose --capture=no --full-trace tests/nosetests/
