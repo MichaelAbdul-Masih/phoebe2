@@ -11,7 +11,13 @@ import os
 def _jktebop_ext_vs_phoebe2(case, plot=False, gen_comp=False):
 
     b = phoebe.default_binary()
-
+    b.add_compute(
+        'jktebop',
+        compute='jktebop1',
+        irrad_method='none',
+        rv_method='dynamical',
+        distortion_method='sphere'
+    )
     b.add_compute(
         compute='phoebe1',
         irrad_method='none',
@@ -65,6 +71,7 @@ def _jktebop_ext_vs_phoebe2(case, plot=False, gen_comp=False):
 
 
     b.set_value_all('ld_mode', value='manual')
+    b.run_compute('jktebop1', model='jktebop_model1')
     b.run_compute('phoebe1', model='phoebe_model1')
 
     # if gen_comp:
@@ -75,22 +82,45 @@ def _jktebop_ext_vs_phoebe2(case, plot=False, gen_comp=False):
 
     if plot:
         fig, axs = plt.subplots(2, 1, sharex=True, gridspec_kw={'height_ratios': [2, 1]}, figsize=(6, 4))
+        axs[0].plot(b['times@jktebop_model1@primary'].get_value(), b['rvs@jktebop_model1@primary'].get_value(), '+', c = 'k', label = 'jktebop backend primary')
+        axs[0].plot(b['times@jktebop_model1@secondary'].get_value(), b['rvs@jktebop_model1@secondary'].get_value(), 'x', c = 'k', label = 'jktebop backend secondary')
+
+        axs[0].plot(jktebop_rv1[0], jktebop_rv1[4], '-', c = 'r', label = 'jktebop ext. primary')
+        axs[0].plot(jktebop_rv2[0], jktebop_rv2[4], '--', c = 'r', label = 'jktebop ext. secondary')
+        axs[0].legend(loc='best')
+
+        axs[0].set_ylabel('RV (km/s)')
+
+        axs[1].plot(b['times@jktebop_model1@primary'].get_value(), b['rvs@jktebop_model1@primary'].get_value() - jktebop_rv1[4], 'o', c = 'b', label = 'jktebop primary')
+        axs[1].plot(b['times@jktebop_model1@secondary'].get_value(), b['rvs@jktebop_model1@secondary'].get_value() - jktebop_rv2[4], 'o', c = 'g', label = 'jktebop primary')
+        axs[1].set_ylabel('Residuals (km/s)')
+        axs[0].set_ylabel('Time')
+
+        plt.show()
+
+    if plot:
+        fig, axs = plt.subplots(2, 1, sharex=True, gridspec_kw={'height_ratios': [2, 1]}, figsize=(6, 4))
         axs[0].plot(b['times@phoebe_model1@primary'].get_value(), b['rvs@phoebe_model1@primary'].get_value(), '+', c = 'k', label = 'phoebe primary')
         axs[0].plot(b['times@phoebe_model1@secondary'].get_value(), b['rvs@phoebe_model1@secondary'].get_value(), 'x', c = 'k', label = 'phoebe secondary')
 
-        axs[0].plot(jktebop_rv1[0], jktebop_rv1[4], '-', c = 'r', label = 'jktebop primary')
-        axs[0].plot(jktebop_rv2[0], jktebop_rv2[4], '--', c = 'r', label = 'jktebop primary')
+        axs[0].plot(jktebop_rv1[0], jktebop_rv1[4], '-', c = 'r', label = 'jktebop ext. primary')
+        axs[0].plot(jktebop_rv2[0], jktebop_rv2[4], '--', c = 'r', label = 'jktebop ext. secondary')
         axs[0].legend(loc='best')
 
         axs[0].set_ylabel('RV (km/s)')
 
         axs[1].plot(b['times@phoebe_model1@primary'].get_value(), b['rvs@phoebe_model1@primary'].get_value() - jktebop_rv1[4], 'o', c = 'b', label = 'jktebop primary')
         axs[1].plot(b['times@phoebe_model1@secondary'].get_value(), b['rvs@phoebe_model1@secondary'].get_value() - jktebop_rv2[4], 'o', c = 'g', label = 'jktebop primary')
+        axs[1].set_ylabel('Residuals (km/s)')
+        axs[0].set_ylabel('Time')
 
         plt.show()
 
+
     assert(np.allclose(b['rvs@phoebe_model1@primary'].get_value(), jktebop_rv1[4], rtol=0., atol=atol))
     assert(np.allclose(b['rvs@phoebe_model1@secondary'].get_value(), jktebop_rv2[4], rtol=0., atol=atol))
+    assert(np.allclose(b['rvs@jktebop_model1@primary'].get_value(), jktebop_rv1[4], rtol=0., atol=1e-6))
+    assert(np.allclose(b['rvs@jktebop_model1@secondary'].get_value(), jktebop_rv2[4], rtol=0., atol=1e-6))
 
 
 def test_jktebop(plot=False, gen_comp=False):
