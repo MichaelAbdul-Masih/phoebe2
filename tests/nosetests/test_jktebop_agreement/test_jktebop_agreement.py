@@ -119,8 +119,8 @@ def _jktebop_ext_vs_phoebe2(case, plot=False, gen_comp=False):
 
     assert(np.allclose(b['rvs@phoebe_model1@primary'].get_value(), jktebop_rv1[4], rtol=0., atol=atol))
     assert(np.allclose(b['rvs@phoebe_model1@secondary'].get_value(), jktebop_rv2[4], rtol=0., atol=atol))
-    assert(np.allclose(b['rvs@jktebop_model1@primary'].get_value(), jktebop_rv1[4], rtol=0., atol=1e-6))
-    assert(np.allclose(b['rvs@jktebop_model1@secondary'].get_value(), jktebop_rv2[4], rtol=0., atol=1e-6))
+    assert(np.allclose(b['rvs@jktebop_model1@primary'].get_value(), jktebop_rv1[4], rtol=0., atol=1e-8))
+    assert(np.allclose(b['rvs@jktebop_model1@secondary'].get_value(), jktebop_rv2[4], rtol=0., atol=1e-8))
 
 
 def test_jktebop(plot=False, gen_comp=False):
