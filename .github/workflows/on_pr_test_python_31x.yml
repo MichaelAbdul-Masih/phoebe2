@@ -104,6 +104,7 @@ jobs:
     - name: Install jktebop
       run: |
         wget https://www.astro.keele.ac.uk/jkt/codes/jktebop-v43.tgz
+        tar -xvzf jktebop-v43.tgz
         cd jktebop-v43
         gfortran -o jktebop jktebop.f
         export PATH=$PATH:$(pwd)
