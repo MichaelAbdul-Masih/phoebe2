@@ -26,8 +26,8 @@ def _jktebop_ext_vs_phoebe2(case, plot=False, gen_comp=False):
     )
 
     if case == 1:
-        jktebop_rv1 = np.loadtxt('jktebop1.rv1.out').T
-        jktebop_rv2 = np.loadtxt('jktebop1.rv2.out').T
+        jktebop_rv1 = np.loadtxt(os.path.join(os.path.dirname(__file__), 'jktebop1.rv1.out')).T
+        jktebop_rv2 = np.loadtxt(os.path.join(os.path.dirname(__file__), 'jktebop1.rv2.out')).T
         atol = 1e-3
 
     elif case == 2:
@@ -42,8 +42,8 @@ def _jktebop_ext_vs_phoebe2(case, plot=False, gen_comp=False):
         b['requiv@secondary@component'] = 3
         b['q@binary@component'] = 0.5
 
-        jktebop_rv1 = np.loadtxt('jktebop2.rv1.out').T
-        jktebop_rv2 = np.loadtxt('jktebop2.rv2.out').T
+        jktebop_rv1 = np.loadtxt(os.path.join(os.path.dirname(__file__), 'jktebop2.rv1.out')).T
+        jktebop_rv2 = np.loadtxt(os.path.join(os.path.dirname(__file__), 'jktebop2.rv2.out')).T
         atol = 3e-5
 
 
@@ -58,8 +58,8 @@ def _jktebop_ext_vs_phoebe2(case, plot=False, gen_comp=False):
         b['requiv@secondary@component'] = 7
         b['q@binary@component'] = 0.25
 
-        jktebop_rv1 = np.loadtxt('jktebop3.rv1.out').T
-        jktebop_rv2 = np.loadtxt('jktebop3.rv2.out').T
+        jktebop_rv1 = np.loadtxt(os.path.join(os.path.dirname(__file__), 'jktebop3.rv1.out')).T
+        jktebop_rv2 = np.loadtxt(os.path.join(os.path.dirname(__file__), 'jktebop3.rv2.out')).T
         atol = 2e-3
 
 
