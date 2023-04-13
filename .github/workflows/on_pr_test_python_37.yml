@@ -96,7 +96,7 @@ jobs:
         tar -xvzf jktebop-v43.tgz
         cd jktebop43
         gfortran -o jktebop jktebop.f
-        export PATH=$PATH:$(pwd)
+        export PATH=$PATH:/home/runner/work/phoebe2/phoebe2/jktebop43/
         cd ..
 
     - name: Test jktebop install
