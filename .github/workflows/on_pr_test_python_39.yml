@@ -97,10 +97,12 @@ jobs:
         cd jktebop43
         gfortran -o jktebop jktebop.f
         export PATH=$PATH:$(pwd)
+        ls
         cd ..
 
     - name: Test jktebop install
       run: |
+        echo $PATH
         jktebop
 
     - name: Run tests
