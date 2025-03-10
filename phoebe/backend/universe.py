@@ -1094,7 +1094,7 @@ class Star(Body):
                  requiv, sma,
                  polar_direction_uvw,
                  freq_rot,
-                 teff, gravb_bol, abun,
+                 teff, gravb_bol, gravblaw_bol, abun,
                  irrad_frac_refl,
                  mesh_method, is_single,
                  do_rv_grav,
@@ -1118,6 +1118,7 @@ class Star(Body):
         self.freq_rot = freq_rot
         self.teff = teff
         self.gravb_bol = gravb_bol
+        self.gravblaw_bol = gravblaw_bol
         self.abun = abun
         self.irrad_frac_refl = irrad_frac_refl
         self.mesh_method = mesh_method
@@ -1145,6 +1146,16 @@ class Star(Body):
 
         self.do_rv_grav = do_rv_grav
         self.features = features
+
+        # define the path to the local EL grids
+        if hasattr(sys, 'real_prefix'):
+            # then we're running in a virtualenv
+            _eldir_local = os.path.join(sys.prefix, '.phoebe/EL_grids/')
+        else:
+            _eldir_local = os.path.abspath(os.path.expanduser('~/.phoebe/EL_grids'))+'/'
+        self.eldir_local = _eldir_local
+
+
 
 
     @classmethod
@@ -1213,6 +1224,7 @@ class Star(Body):
 
         teff = b.get_value(qualifier='teff', component=component, context='component', unit=u.K, **_skip_filter_checks)
         gravb_bol= b.get_value(qualifier='gravb_bol', component=component, context='component', **_skip_filter_checks)
+        gravblaw_bol = b.get_value(qualifier='gravblaw_bol', component=component, context='component', **_skip_filter_checks)
 
         abun = b.get_value(qualifier='abun', component=component, context='component', **_skip_filter_checks)
         irrad_frac_refl = b.get_value(qualifier='irrad_frac_refl_bol', component=component, context='component', **_skip_filter_checks)
@@ -1322,6 +1334,7 @@ class Star(Body):
                    freq_rot,
                    teff,
                    gravb_bol,
+                   gravblaw_bol,
                    abun,
                    irrad_frac_refl,
                    mesh_method,
@@ -1419,7 +1432,7 @@ class Star(Body):
     def compute_local_quantities(self, xs, ys, zs, ignore_effects=False, **kwargs):
         # Now fill local instantaneous quantities
         self._fill_loggs(ignore_effects=ignore_effects)
-        self._fill_gravs()
+        self._fill_gdcs()
         self._fill_teffs(ignore_effects=ignore_effects)
         self._fill_abuns(abun=self.abun)
         self._fill_albedos(irrad_frac_refl=self.irrad_frac_refl)
@@ -1502,7 +1515,7 @@ class Star(Body):
                 raise ValueError("mesh must be computed before determining tpole")
             # Convert from mean to polar by dividing flux by gravity darkened flux (Ls drop out)
             # see PHOEBE Legacy scientific reference eq 5.20
-            self.inst_vals['tpole'] = self.teff*(np.sum(self.mesh.areas) / np.sum(self.mesh.gravs.centers*self.mesh.areas))**(0.25)
+            self.inst_vals['tpole'] = self.teff*(np.sum(self.mesh.areas) / np.sum(self.mesh.gdcs.centers*self.mesh.areas))**(0.25)
 
         return self.inst_vals['tpole']
 
@@ -1543,33 +1556,124 @@ class Star(Body):
             theta = 0.0
             self._standard_meshes[theta].update_columns(loggs=loggs)
 
-    def _fill_gravs(self, mesh=None, **kwargs):
+    def _fill_gdcs(self, mesh=None, **kwargs):
         """
         TODO: add documentation
 
         requires _fill_loggs to have been called
         """
-        logger.debug("{}._fill_gravs".format(self.component))
+        logger.debug("{}._fill_gdcs".format(self.component))
 
         if mesh is None:
             mesh = self.mesh
 
         # TODO: rename 'gravs' to 'gdcs' (gravity darkening corrections)
+        if self.gravblaw_bol == 'VZ':
+            gdcs = ((mesh.normgrads.for_computations * g_rel_to_abs(self.masses[self.ind_self], self.sma))/self.instantaneous_gpole)**self.gravb_bol
+        else:
+            gdcs = ((mesh.normgrads.for_computations * g_rel_to_abs(self.masses[self.ind_self], self.sma))/self.instantaneous_gpole)**1.0
 
-        gravs = ((mesh.normgrads.for_computations * g_rel_to_abs(self.masses[self.ind_self], self.sma))/self.instantaneous_gpole)**self.gravb_bol
-
-        mesh.update_columns(gravs=gravs)
+        mesh.update_columns(gdcs=gdcs)
 
         if not self.needs_recompute_instantaneous:
-            logger.debug("{}._fill_gravs: copying gravs to standard mesh".format(self.component))
+            logger.debug("{}._fill_gdcs: copying gdcs to standard mesh".format(self.component))
             theta = 0.0
-            self._standard_meshes[theta].update_columns(gravs=gravs)
+            self._standard_meshes[theta].update_columns(gdcs=gdcs)
 
+    def _interpolate_psi_grid(self, v_linear_crit_frac):
+        """
+        Used for Espinosa Lara single star gravity darkening prescription
+        This prescription depends on a parameter omega which is defined in 
+        Eq. 10 of Espinosa Lara + 2011.  In this case, omega is defined as
+        the angular rotation rate divided by the keplerian rotation rate.
+        The computed grid has been calculated based on this, but instead of
+        using this omega as the free parameter, we use the percentage of 
+        critical velocity as the free parameter as this value is more often
+        used throughout the literature to describe the rotation rate of stars.
+        The computated grid still accounts for the correct omega however.
+        """
+        psi_grid = np.load(self.eldir_local + 'psi_grid.npy')
+        v_linear_percent_crit = v_linear_crit_frac * 100
+
+        if (v_linear_percent_crit).is_integer():
+            psis = psi_grid[int(v_linear_percent_crit)]
+        else:
+            v_upper = int(np.ceil(v_linear_percent_crit))
+            v_lower = int(np.floor(v_linear_percent_crit))
+
+            weight_lower = v_upper - v_linear_percent_crit
+            weight_upper = v_linear_percent_crit - v_lower
+
+            psis = psi_grid[v_upper] * weight_upper + psi_grid[v_lower] * weight_lower
+        return psis
+    
+    def _calc_critical_velocity(self, M, r_pole):
+        '''
+        M      - mass in units of solar mass
+        r_pole - polar radius in units of solar radius
+        Calculates critical velocity given M and R
+        '''
+        # We convert all values to km, kg and s so that the final rotational velocity is in km/s
+        v_crit = np.sqrt(2./3. * c.G.to('km3/(kg s2)') * M*c.M_sun.to('kg') / (r_pole*c.R_sun.to('km')))
+        return v_crit.value
+
+    def _get_EL2012_exponent(self, q, fill_factor):
+        qs = [0.0, 0.001, 0.01, 0.1, 1.0, 3.0, 10.0, 100.0]
+        fill_factors = [0.3, 0.5, 0.7, 0.8, 0.9, 0.95, 0.99]
+
+        array = [
+            [0.2456, 0.2308, 0.2034, 0.1854, 0.1641, 0.1509, 0.1365],
+            [0.2464, 0.2342, 0.2110, 0.1958, 0.1789, 0.1708, 0.1666],
+            [0.2472, 0.2374, 0.2188, 0.2068, 0.1948, 0.1901, 0.1880],
+            [0.2482, 0.2420, 0.2303, 0.2232, 0.2168, 0.2143, 0.2131],
+            [0.2489, 0.2452, 0.2385, 0.2346, 0.2308, 0.2291, 0.2280],
+            [0.2490, 0.2455, 0.2394, 0.2359, 0.2324, 0.2308, 0.2297],
+            [0.2489, 0.2453, 0.2391, 0.2355, 0.2320, 0.2304, 0.2292],
+            [0.2487, 0.2447, 0.2377, 0.2337, 0.2298, 0.2279, 0.2267]
+        ]
+
+        # Check if q and fill_factor are within the bounds of the grid
+        # if they aren't chose the closest value within the grid
+        if q < qs[0]:
+            q = qs[0]
+            q_ind = 0
+        elif q > qs[-1]:
+            q = qs[-1]
+            q_ind = -2
+        else:
+            q_ind = np.argmin(np.abs(np.array(qs) - q))
+            if qs[q_ind] > q:
+                q_ind -= 1
+        
+        if fill_factor < fill_factors[0]:
+            fill_factor = fill_factors[0]
+            fill_factor_ind = 0
+        elif fill_factor > fill_factors[-1]:
+            fill_factor = fill_factors[-1]
+            fill_factor_ind = -2
+        else:
+            fill_factor_ind = np.argmin(np.abs(np.array(fill_factors) - fill_factor))
+            if fill_factors[fill_factor_ind] > fill_factor:
+                fill_factor_ind -= 1
+
+        q_lower = qs[q_ind]
+        q_upper = qs[q_ind + 1]
+        fill_factor_lower = fill_factors[fill_factor_ind]
+        fill_factor_upper = fill_factors[fill_factor_ind + 1]
+
+        # calculate weights:
+        qwu = (q - q_lower) / (q_upper - q_lower)
+        qwl = 1 - qwu
+        fwu = (fill_factor - fill_factor_lower) / (fill_factor_upper - fill_factor_lower)
+        fwl = 1 - fwu
+
+        exponent = array[q_ind][fill_factor_ind] * qwl * fwl + array[q_ind + 1][fill_factor_ind] * qwu * fwl + array[q_ind][fill_factor_ind + 1] * qwl * fwu + array[q_ind + 1][fill_factor_ind + 1] * qwu * fwu
+        return exponent
 
     def _fill_teffs(self, mesh=None, ignore_effects=False, **kwargs):
         r"""
 
-        requires _fill_loggs and _fill_gravs to have been called
+        requires _fill_loggs and _fill_gdcs to have been called
 
         Calculate local temperature of a Star.
         """
@@ -1580,7 +1684,59 @@ class Star(Body):
 
         # Now we can compute the local temperatures.
         # see PHOEBE Legacy scientific reference eq 5.23
-        teffs = self.instantaneous_tpole*mesh.gravs.for_computations**0.25
+        gravblaw_bol = self.gravblaw_bol
+
+        if gravblaw_bol == 'VZ':
+            teffs = self.instantaneous_tpole*mesh.gdcs.for_computations**0.25
+
+        elif gravblaw_bol == 'EL_single':
+            # grab loggs
+            loggs = mesh.loggs.for_computations
+            areas = self.mesh.areas_si
+            area = (np.sum(areas) * u.m**2).to('solRad2').value
+            rpole = self.instantaneous_rpole*self.sma*u.solRad
+
+            xs, ys, zs, rs = mesh.roche_coords_for_computations[:,0], mesh.roche_coords_for_computations[:,1], mesh.roche_coords_for_computations[:,2], np.sqrt((mesh.roche_coords_for_computations**2).sum(axis=1))
+
+            rmax = np.max(rs)*self.sma*u.solRad
+            thetas = np.arccos(np.abs(zs) / rs)
+            # correct edge cases
+            thetas -= (thetas > np.pi) * np.pi
+            thetas += (thetas == 0) * 1e-6
+            thetas -= (thetas == np.pi/2) * 1e-6
+
+            # calculate critical velocity
+            v_crit = self._calc_critical_velocity(self.masses[self.ind_self], rpole.value)
+            vrot = self.freq_rot * rmax.to('km').value / 86400
+            v_crit_frac = vrot / v_crit
+            
+            # calculate psi
+            psis_grid = self._interpolate_psi_grid(v_crit_frac)
+            thetas_grid = np.load(self.eldir_local + 'theta_grid.npy')
+            psis = np.interp(thetas, thetas_grid, psis_grid)
+            psis = np.array(psis, dtype='float64')
+
+            teffs = (self.teff**4 * area / (4 * np.pi * c.G.to('solRad3/(solMass s2)').value * self.masses[self.ind_self]))**(1./4.) * np.sqrt(np.tan(psis)/np.tan(thetas)) * (10**loggs / c.R_sun.to('cm').value)**(1./4.)
+        
+        elif gravblaw_bol == 'EL_binary':
+            # we need the location of L1 along the line of centers
+            l1 = 0.5
+            # we need the extent of the envelope in the x-direction
+            xs = mesh.roche_coords_for_computations[:,0]
+            x_max = np.max(xs)
+
+            fill_factor = x_max / l1
+
+            # we need the mass ratio
+            q = self.masses[self.ind_sibling] / self.masses[self.ind_self]
+
+            # we need the exponent
+            EL_exponent = self._get_EL2012_exponent(q, fill_factor)
+            teffs = self.instantaneous_tpole*mesh.gdcs.for_computations**EL_exponent
+
+
+
+
 
         if not ignore_effects:
             for feature in self.features:
@@ -1952,7 +2108,7 @@ class Star_roche(Star):
                  requiv, sma,
                  polar_direction_uvw,
                  freq_rot,
-                 teff, gravb_bol, abun,
+                 teff, gravb_bol, gravblaw_bol, abun,
                  irrad_frac_refl,
                  mesh_method, is_single,
                  do_rv_grav,
@@ -1976,7 +2132,7 @@ class Star_roche(Star):
                                          requiv, sma,
                                          polar_direction_uvw,
                                          freq_rot,
-                                         teff, gravb_bol, abun,
+                                         teff, gravb_bol, gravblaw_bol, abun,
                                          irrad_frac_refl,
                                          mesh_method, is_single,
                                          do_rv_grav,
@@ -2180,7 +2336,7 @@ class Star_roche_envelope_half(Star):
                  requiv, sma,
                  polar_direction_uvw,
                  freq_rot,
-                 teff, gravb_bol, abun,
+                 teff, gravb_bol, gravblaw_bol, abun,
                  irrad_frac_refl,
                  mesh_method, is_single,
                  do_rv_grav,
@@ -2208,7 +2364,7 @@ class Star_roche_envelope_half(Star):
                                          requiv, sma,
                                          polar_direction_uvw,
                                          freq_rot,
-                                         teff, gravb_bol, abun,
+                                         teff, gravb_bol, gravblaw_bol, abun,
                                          irrad_frac_refl,
                                          mesh_method, is_single,
                                          do_rv_grav,
@@ -2383,7 +2539,7 @@ class Star_rotstar(Star):
                  requiv, sma,
                  polar_direction_uvw,
                  freq_rot,
-                 teff, gravb_bol, abun,
+                 teff, gravb_bol, gravblaw_bol, abun,
                  irrad_frac_refl,
                  mesh_method, is_single,
                  do_rv_grav,
@@ -2406,7 +2562,7 @@ class Star_rotstar(Star):
                                            requiv, sma,
                                            polar_direction_uvw,
                                            freq_rot,
-                                           teff, gravb_bol, abun,
+                                           teff, gravb_bol, gravblaw_bol, abun,
                                            irrad_frac_refl,
                                            mesh_method, is_single,
                                            do_rv_grav,
@@ -2565,7 +2721,7 @@ class Star_sphere(Star):
                  requiv, sma,
                  polar_direction_uvw,
                  freq_rot,
-                 teff, gravb_bol, abun,
+                 teff, gravb_bol, gravblaw_bol, abun,
                  irrad_frac_refl,
                  mesh_method, is_single,
                  do_rv_grav,
@@ -2589,7 +2745,7 @@ class Star_sphere(Star):
                                           requiv, sma,
                                           polar_direction_uvw,
                                           freq_rot,
-                                          teff, gravb_bol, abun,
+                                          teff, gravb_bol, gravblaw_bol, abun,
                                           irrad_frac_refl,
                                           mesh_method, is_single,
                                           do_rv_grav,

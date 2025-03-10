@@ -346,10 +346,11 @@ null
 "context": "component",
 "description": "Gravity brightening law",
 "choices": [
-"zeipel",
-"espinosa"
+"VZ",
+"EL_single",
+"EL_binary"
 ],
-"value": "zeipel",
+"value": "VZ",
 "copy_for": false,
 "Class": "ChoiceParameter"
 },
@@ -365,7 +366,7 @@ null
 0.0,
 1.0
 ],
-"visible_if": "gravblaw_bol:zeipel",
+"visible_if": "gravblaw_bol:VZ",
 "copy_for": false,
 "latexfmt": "\\beta_{{ \\mathrm{{bol}}, \\mathrm{{ {component} }} }}",
 "Class": "FloatParameter"
@@ -441,8 +442,8 @@ null
 "description": "Source for bolometric limb darkening coefficients (used only for irradiation; 'auto' to interpolate from the applicable table according to the 'atm' parameter, or the name of a specific atmosphere table)",
 "choices": [
 "auto",
-"phoenix",
-"ck2004"
+"ck2004",
+"phoenix"
 ],
 "value": "auto",
 "visible_if": "ld_mode_bol:lookup",
@@ -892,11 +893,11 @@ null
 "context": "compute",
 "description": "Atmosphere table",
 "choices": [
-"ck2004",
 "blackbody",
-"extern_atmx",
 "extern_planckint",
-"phoenix"
+"extern_atmx",
+"phoenix",
+"ck2004"
 ],
 "value": "ck2004",
 "copy_for": {
@@ -1048,11 +1049,11 @@ null
 "context": "compute",
 "description": "Atmosphere table",
 "choices": [
-"ck2004",
 "blackbody",
-"extern_atmx",
 "extern_planckint",
-"phoenix"
+"extern_atmx",
+"phoenix",
+"ck2004"
 ],
 "value": "ck2004",
 "copy_for": false,

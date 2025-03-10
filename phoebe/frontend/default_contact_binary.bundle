@@ -117,7 +117,7 @@ null
 "qualifier": "hierarchy",
 "context": "system",
 "description": "Hierarchy representation",
-"value": "orbit:binary(star:primary, star:secondary)",
+"value": "orbit:binary(star:primary, star:secondary, envelope:contact_envelope)",
 "copy_for": false,
 "advanced": true,
 "Class": "HierarchyParameter"
@@ -128,7 +128,7 @@ null
 "kind": "star",
 "context": "component",
 "description": "Equivalent radius",
-"value": 1.0,
+"value": 1.5,
 "default_unit": "solRad",
 "limits": [
 1e-06,
@@ -144,7 +144,7 @@ null
 "kind": "star",
 "context": "component",
 "description": "Critical (maximum) value of the equivalent radius for the given morphology",
-"value": 2.013275176537638,
+"value": 1.6724563972838384,
 "default_unit": "solRad",
 "limits": [
 0.0,
@@ -160,7 +160,7 @@ null
 "kind": "star",
 "context": "component",
 "description": "Critical (minimum) value of the equivalent radius for the given morphology",
-"value": 0.1,
+"value": 1.2725418568681297,
 "default_unit": "solRad",
 "limits": [
 0.0,
@@ -209,7 +209,7 @@ null
 "kind": "star",
 "context": "component",
 "description": "logg at requiv",
-"value": 4.437551868254479,
+"value": 4.089736153779247,
 "default_unit": "",
 "limits": [
 null,
@@ -242,7 +242,7 @@ null
 "kind": "star",
 "context": "component",
 "description": "Rotation period (wrt the sky)",
-"value": 1.0,
+"value": 0.5,
 "default_unit": "d",
 "limits": [
 1e-06,
@@ -259,7 +259,7 @@ null
 "kind": "star",
 "context": "component",
 "description": "Rotation frequency (wrt the sky)",
-"value": 6.283185307179586,
+"value": 12.566370614359172,
 "default_unit": "rad / d",
 "limits": [
 0.0,
@@ -346,10 +346,11 @@ null
 "context": "component",
 "description": "Gravity brightening law",
 "choices": [
-"zeipel",
-"espinosa"
+"VZ",
+"EL_single",
+"EL_binary"
 ],
-"value": "zeipel",
+"value": "VZ",
 "copy_for": false,
 "Class": "ChoiceParameter"
 },
@@ -365,7 +366,7 @@ null
 0.0,
 1.0
 ],
-"visible_if": "gravblaw_bol:zeipel",
+"visible_if": "gravblaw_bol:VZ",
 "copy_for": false,
 "latexfmt": "\\beta_{{ \\mathrm{{bol}}, \\mathrm{{ {component} }} }}",
 "Class": "FloatParameter"
@@ -441,8 +442,8 @@ null
 "description": "Source for bolometric limb darkening coefficients (used only for irradiation; 'auto' to interpolate from the applicable table according to the 'atm' parameter, or the name of a specific atmosphere table)",
 "choices": [
 "auto",
-"phoenix",
-"ck2004"
+"ck2004",
+"phoenix"
 ],
 "value": "auto",
 "visible_if": "ld_mode_bol:lookup",
@@ -475,7 +476,7 @@ null
 "kind": "star",
 "context": "component",
 "description": "Mass",
-"value": 0.9988131257959815,
+"value": 1.0089067893421308,
 "default_unit": "solMass",
 "limits": [
 1e-12,
@@ -491,7 +492,7 @@ null
 "kind": "star",
 "context": "component",
 "description": "Equivalent radius",
-"value": 1.0,
+"value": 1.4999999999999996,
 "default_unit": "solRad",
 "limits": [
 1e-06,
@@ -507,7 +508,7 @@ null
 "kind": "star",
 "context": "component",
 "description": "Critical (maximum) value of the equivalent radius for the given morphology",
-"value": 2.013275176537638,
+"value": 1.6724563972838378,
 "default_unit": "solRad",
 "limits": [
 0.0,
@@ -523,7 +524,7 @@ null
 "kind": "star",
 "context": "component",
 "description": "Critical (minimum) value of the equivalent radius for the given morphology",
-"value": 0.1,
+"value": 1.2725418568681297,
 "default_unit": "solRad",
 "limits": [
 0.0,
@@ -572,7 +573,7 @@ null
 "kind": "star",
 "context": "component",
 "description": "logg at requiv",
-"value": 4.437551868254479,
+"value": 4.089736153779248,
 "default_unit": "",
 "limits": [
 null,
@@ -605,7 +606,7 @@ null
 "kind": "star",
 "context": "component",
 "description": "Rotation period (wrt the sky)",
-"value": 1.0,
+"value": 0.5,
 "default_unit": "d",
 "limits": [
 1e-06,
@@ -622,7 +623,7 @@ null
 "kind": "star",
 "context": "component",
 "description": "Rotation frequency (wrt the sky)",
-"value": 6.283185307179586,
+"value": 12.566370614359172,
 "default_unit": "rad / d",
 "limits": [
 0.0,
@@ -709,10 +710,11 @@ null
 "context": "component",
 "description": "Gravity brightening law",
 "choices": [
-"zeipel",
-"espinosa"
+"VZ",
+"EL_single",
+"EL_binary"
 ],
-"value": "zeipel",
+"value": "VZ",
 "copy_for": false,
 "Class": "ChoiceParameter"
 },
@@ -728,7 +730,7 @@ null
 0.0,
 1.0
 ],
-"visible_if": "gravblaw_bol:zeipel",
+"visible_if": "gravblaw_bol:VZ",
 "copy_for": false,
 "latexfmt": "\\beta_{{ \\mathrm{{bol}}, \\mathrm{{ {component} }} }}",
 "Class": "FloatParameter"
@@ -804,8 +806,8 @@ null
 "description": "Source for bolometric limb darkening coefficients (used only for irradiation; 'auto' to interpolate from the applicable table according to the 'atm' parameter, or the name of a specific atmosphere table)",
 "choices": [
 "auto",
-"phoenix",
-"ck2004"
+"ck2004",
+"phoenix"
 ],
 "value": "auto",
 "visible_if": "ld_mode_bol:lookup",
@@ -838,7 +840,7 @@ null
 "kind": "star",
 "context": "component",
 "description": "Mass",
-"value": 0.9988131257959815,
+"value": 1.0089067893421308,
 "default_unit": "solMass",
 "limits": [
 1e-12,
@@ -854,7 +856,7 @@ null
 "kind": "orbit",
 "context": "component",
 "description": "Orbital period (defined at t0@system, sidereal: wrt the sky)",
-"value": 1.0,
+"value": 0.5,
 "default_unit": "d",
 "limits": [
 1e-06,
@@ -870,7 +872,7 @@ null
 "kind": "orbit",
 "context": "component",
 "description": "Anomalistic orbital period (defined at t0@system, anomalistic: time between two successive periastron passages)",
-"value": 1.0,
+"value": 0.5,
 "default_unit": "d",
 "limits": [
 null,
@@ -887,7 +889,7 @@ null
 "kind": "orbit",
 "context": "component",
 "description": "Orbital frequency (sidereal)",
-"value": 6.283185307179586,
+"value": 12.566370614359172,
 "default_unit": "rad / d",
 "limits": [
 null,
@@ -970,7 +972,7 @@ null
 "kind": "orbit",
 "context": "component",
 "description": "Zeropoint date at periastron passage of the primary component",
-"value": -0.25,
+"value": -0.125,
 "default_unit": "d",
 "limits": [
 null,
@@ -1066,7 +1068,7 @@ null
 "kind": "orbit",
 "context": "component",
 "description": "Semi-major axis of the orbit (defined at time t0@system)",
-"value": 5.3,
+"value": 3.35,
 "default_unit": "solRad",
 "limits": [
 0.0,
@@ -1098,7 +1100,7 @@ null
 "kind": "orbit",
 "context": "component",
 "description": "Projected semi major axis",
-"value": 5.3,
+"value": 3.35,
 "default_unit": "solRad",
 "limits": [
 null,
@@ -1141,6 +1143,85 @@ null
 "Class": "FloatParameter"
 },
 {
+"qualifier": "abun",
+"component": "contact_envelope",
+"kind": "envelope",
+"context": "component",
+"description": "Abundance/Metallicity",
+"value": 0.0,
+"default_unit": "",
+"limits": [
+null,
+null
+],
+"copy_for": false,
+"Class": "FloatParameter"
+},
+{
+"qualifier": "fillout_factor",
+"component": "contact_envelope",
+"kind": "envelope",
+"context": "component",
+"description": "Fillout-factor of the envelope",
+"value": 0.6417897080770943,
+"default_unit": "",
+"limits": [
+0.0,
+1.0
+],
+"copy_for": false,
+"latexfmt": "\\mathrm{{FF}}_\\mathrm{{ {component} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "pot",
+"component": "contact_envelope",
+"kind": "envelope",
+"context": "component",
+"description": "Potential of the envelope (from the primary component's reference)",
+"value": 3.401377407229877,
+"default_unit": "",
+"limits": [
+0.0,
+null
+],
+"copy_for": false,
+"latexfmt": "\\Omega_\\mathrm{{ {component} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "pot_min",
+"component": "contact_envelope",
+"kind": "envelope",
+"context": "component",
+"description": "Critical (minimum) value of the potential to remain a contact",
+"value": 3.2067962240861534,
+"default_unit": "",
+"limits": [
+0.0,
+null
+],
+"copy_for": false,
+"latexfmt": "\\Omega_\\mathrm{{ min,  {component} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "pot_max",
+"component": "contact_envelope",
+"kind": "envelope",
+"context": "component",
+"description": "Critical (maximum) value of the potential to remain a contact",
+"value": 3.75,
+"default_unit": "",
+"limits": [
+0.0,
+null
+],
+"copy_for": false,
+"latexfmt": "\\Omega_\\mathrm{{ max, {component} }}",
+"Class": "FloatParameter"
+},
+{
 "qualifier": "teffratio",
 "component": "binary",
 "kind": "orbit",
@@ -1162,7 +1243,7 @@ null
 "kind": "orbit",
 "context": "component",
 "description": "ratio between equivalent radii of children stars",
-"value": 1.0,
+"value": 0.9999999999999997,
 "default_unit": "",
 "limits": [
 0.0,
@@ -1178,7 +1259,7 @@ null
 "kind": "orbit",
 "context": "component",
 "description": "sum of fractional equivalent radii of children stars",
-"value": 0.37735849056603776,
+"value": 0.8955223880597013,
 "default_unit": "",
 "limits": [
 0.0,
@@ -1194,7 +1275,7 @@ null
 "kind": "star",
 "context": "component",
 "description": "Semi major axis of the component in the orbit",
-"value": 2.65,
+"value": 1.675,
 "default_unit": "solRad",
 "limits": [
 null,
@@ -1211,7 +1292,7 @@ null
 "kind": "star",
 "context": "component",
 "description": "Projected semi major axis of the component in the orbit",
-"value": 2.65,
+"value": 1.675,
 "default_unit": "solRad",
 "limits": [
 null,
@@ -1228,7 +1309,7 @@ null
 "kind": "star",
 "context": "component",
 "description": "Semi major axis of the component in the orbit",
-"value": 2.65,
+"value": 1.675,
 "default_unit": "solRad",
 "limits": [
 null,
@@ -1245,7 +1326,7 @@ null
 "kind": "star",
 "context": "component",
 "description": "Projected semi major axis of the component in the orbit",
-"value": 2.65,
+"value": 1.675,
 "default_unit": "solRad",
 "limits": [
 null,
@@ -1504,6 +1585,86 @@ null
 "Class": "ConstraintParameter"
 },
 {
+"qualifier": "pot",
+"component": "contact_envelope",
+"kind": "envelope",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "requiv_to_pot_contact({requiv@primary@component}, {q@binary@component}, {sma@binary@component}, 1)",
+"default_unit": "",
+"constraint_func": "requiv_to_pot",
+"constraint_kwargs": {
+"component": "primary"
+},
+"constraint_addl_vars": [],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "requiv",
+"component": "secondary",
+"kind": "star",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "pot_to_requiv_contact({pot@contact_envelope@component}, {q@binary@component}, {sma@binary@component}, 2)",
+"default_unit": "solRad",
+"constraint_func": "requiv_to_pot",
+"constraint_kwargs": {
+"component": "secondary"
+},
+"constraint_addl_vars": [],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "fillout_factor",
+"component": "contact_envelope",
+"kind": "envelope",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "pot_to_fillout_factor({q@binary@component}, {pot@contact_envelope@component})",
+"default_unit": "",
+"constraint_func": "fillout_factor",
+"constraint_kwargs": {
+"component": "contact_envelope"
+},
+"constraint_addl_vars": [],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "pot_min",
+"component": "contact_envelope",
+"kind": "envelope",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "potential_contact_L23({q@binary@component})",
+"default_unit": "",
+"constraint_func": "potential_contact_min",
+"constraint_kwargs": {
+"component": "contact_envelope"
+},
+"constraint_addl_vars": [],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "pot_max",
+"component": "contact_envelope",
+"kind": "envelope",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "potential_contact_L1({q@binary@component})",
+"default_unit": "",
+"constraint_func": "potential_contact_max",
+"constraint_kwargs": {
+"component": "contact_envelope"
+},
+"constraint_addl_vars": [],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
 "qualifier": "teffratio",
 "component": "binary",
 "kind": "orbit",
@@ -1671,9 +1832,25 @@ null
 "kind": "star",
 "context": "constraint",
 "description": "expression that determines the constraint",
-"value": "requiv_L1({q@binary@component}, {syncpar@primary@component}, {ecc@binary@component}, {sma@binary@component}, {incl@primary@component}, {long_an@primary@component}, {incl@binary@component}, {long_an@binary@component}, 1)",
+"value": "requiv_contact_L23({q@binary@component}, {sma@binary@component}, 1)",
 "default_unit": "solRad",
-"constraint_func": "requiv_detached_max",
+"constraint_func": "requiv_contact_max",
+"constraint_kwargs": {
+"component": "primary"
+},
+"constraint_addl_vars": [],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "requiv_min",
+"component": "primary",
+"kind": "star",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "requiv_contact_L1({q@binary@component}, {sma@binary@component}, 1)",
+"default_unit": "solRad",
+"constraint_func": "requiv_contact_min",
 "constraint_kwargs": {
 "component": "primary"
 },
@@ -1789,9 +1966,25 @@ null
 "kind": "star",
 "context": "constraint",
 "description": "expression that determines the constraint",
-"value": "requiv_L1({q@binary@component}, {syncpar@secondary@component}, {ecc@binary@component}, {sma@binary@component}, {incl@secondary@component}, {long_an@secondary@component}, {incl@binary@component}, {long_an@binary@component}, 2)",
+"value": "requiv_contact_L23({q@binary@component}, {sma@binary@component}, 2)",
 "default_unit": "solRad",
-"constraint_func": "requiv_detached_max",
+"constraint_func": "requiv_contact_max",
+"constraint_kwargs": {
+"component": "secondary"
+},
+"constraint_addl_vars": [],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "requiv_min",
+"component": "secondary",
+"kind": "star",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "requiv_contact_L1({q@binary@component}, {sma@binary@component}, 2)",
+"default_unit": "solRad",
+"constraint_func": "requiv_contact_min",
 "constraint_kwargs": {
 "component": "secondary"
 },
@@ -2129,11 +2322,11 @@ null
 "context": "compute",
 "description": "Atmosphere table",
 "choices": [
-"ck2004",
 "blackbody",
-"extern_atmx",
 "extern_planckint",
-"phoenix"
+"extern_atmx",
+"phoenix",
+"ck2004"
 ],
 "value": "ck2004",
 "copy_for": {
@@ -2259,6 +2452,21 @@ null
 "Class": "ChoiceParameter"
 },
 {
+"qualifier": "mesh_method",
+"component": "contact_envelope",
+"compute": "phoebe01",
+"kind": "phoebe",
+"context": "compute",
+"description": "Which method to use for discretizing the surface",
+"choices": [
+"marching"
+],
+"value": "marching",
+"visible_if": "hierarchy.is_meshable:true",
+"copy_for": false,
+"Class": "ChoiceParameter"
+},
+{
 "qualifier": "ntriangles",
 "component": "primary",
 "compute": "phoebe01",
@@ -2282,6 +2490,22 @@ null
 "context": "compute",
 "description": "Requested number of triangles (won't be exact).",
 "value": 1500,
+"limits": [
+100,
+null
+],
+"visible_if": "mesh_method:marching,hierarchy.is_meshable:true",
+"copy_for": false,
+"Class": "IntParameter"
+},
+{
+"qualifier": "ntriangles",
+"component": "contact_envelope",
+"compute": "phoebe01",
+"kind": "phoebe",
+"context": "compute",
+"description": "Requested number of triangles (won't be exact).",
+"value": 3000,
 "limits": [
 100,
 null
@@ -2334,11 +2558,11 @@ null
 "context": "compute",
 "description": "Atmosphere table",
 "choices": [
-"ck2004",
 "blackbody",
-"extern_atmx",
 "extern_planckint",
-"phoenix"
+"extern_atmx",
+"phoenix",
+"ck2004"
 ],
 "value": "ck2004",
 "copy_for": false,
@@ -2352,11 +2576,11 @@ null
 "context": "compute",
 "description": "Atmosphere table",
 "choices": [
-"ck2004",
 "blackbody",
-"extern_atmx",
 "extern_planckint",
-"phoenix"
+"extern_atmx",
+"phoenix",
+"ck2004"
 ],
 "value": "ck2004",
 "copy_for": false,
@@ -2542,6 +2766,16 @@ null
 "qualifier": "latex_repr",
 "component": "binary",
 "kind": "orbit",
+"context": "figure",
+"description": "Representation to use in place of the component label when rendering latex representations of parameters.  If blank, will use the labels directly.",
+"value": "",
+"copy_for": false,
+"Class": "StringParameter"
+},
+{
+"qualifier": "latex_repr",
+"component": "contact_envelope",
+"kind": "envelope",
 "context": "figure",
 "description": "Representation to use in place of the component label when rendering latex representations of parameters.  If blank, will use the labels directly.",
 "value": "",

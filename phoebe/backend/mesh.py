@@ -512,7 +512,7 @@ class ProtoMesh(object):
 
         ### PHYSICAL QUANTITIES
         self._loggs             = ComputedColumn(mesh=self)
-        self._gravs             = ComputedColumn(mesh=self)
+        self._gdcs             = ComputedColumn(mesh=self)
         self._teffs             = ComputedColumn(mesh=self)
         self._abuns             = ComputedColumn(mesh=self)
         self._irrad_frac_refl  = ComputedColumn(mesh=self)
@@ -536,7 +536,7 @@ class ProtoMesh(object):
                   'velocities', 'vnormals', 'tnormals',
                   'normgrads', 'volume', 'area',
                   'phis', 'thetas',
-                  'loggs', 'gravs', 'teffs', 'abuns', 'irrad_frac_refl'] # frac_heats, frac_scatts
+                  'loggs', 'gdcs', 'teffs', 'abuns', 'irrad_frac_refl'] # frac_heats, frac_scatts
         self._keys = keys + kwargs.pop('keys', [])
 
         self.update_columns(**kwargs)
@@ -1031,15 +1031,15 @@ class ProtoMesh(object):
         return self._loggs
 
     @property
-    def gravs(self):
+    def gdcs(self):
         """
-        Return the array of gravs, where each item is a scalar/float.
+        Return the array of gdcs (gravity darkening coefficients), where each item is a scalar/float.
 
         TODO: UNIT?
 
         (ComputedColumn)
         """
-        return self._gravs
+        return self._gdcs
 
     @property
     def teffs(self):

@@ -340,6 +340,20 @@ null
 "Class": "FloatParameter"
 },
 {
+"qualifier": "gravblaw_bol",
+"component": "starA",
+"kind": "star",
+"context": "component",
+"description": "Gravity brightening law",
+"choices": [
+"zeipel",
+"espinosa"
+],
+"value": "zeipel",
+"copy_for": false,
+"Class": "ChoiceParameter"
+},
+{
 "qualifier": "gravb_bol",
 "component": "starA",
 "kind": "star",
@@ -351,6 +365,7 @@ null
 0.0,
 1.0
 ],
+"visible_if": "gravblaw_bol:zeipel",
 "copy_for": false,
 "latexfmt": "\\beta_{{ \\mathrm{{bol}}, \\mathrm{{ {component} }} }}",
 "Class": "FloatParameter"
@@ -877,11 +892,11 @@ null
 "context": "compute",
 "description": "Atmosphere table",
 "choices": [
-"phoenix",
-"extern_atmx",
 "ck2004",
 "blackbody",
-"extern_planckint"
+"extern_atmx",
+"extern_planckint",
+"phoenix"
 ],
 "value": "ck2004",
 "copy_for": {
@@ -1033,11 +1048,11 @@ null
 "context": "compute",
 "description": "Atmosphere table",
 "choices": [
-"phoenix",
-"extern_atmx",
 "ck2004",
 "blackbody",
-"extern_planckint"
+"extern_atmx",
+"extern_planckint",
+"phoenix"
 ],
 "value": "ck2004",
 "copy_for": false,
@@ -1148,7 +1163,7 @@ null
 "qualifier": "phoebe_version",
 "context": "setting",
 "description": "Version of PHOEBE",
-"value": "2.4.15",
+"value": "2.4.17",
 "copy_for": false,
 "readonly": true,
 "advanced": true,
