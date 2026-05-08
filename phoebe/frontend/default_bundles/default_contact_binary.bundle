@@ -117,18 +117,18 @@ null
 "qualifier": "hierarchy",
 "context": "system",
 "description": "Hierarchy representation",
-"value": "star:starA",
+"value": "orbit:binary(star:primary, star:secondary, envelope:contact_envelope)",
 "copy_for": false,
 "advanced": true,
 "Class": "HierarchyParameter"
 },
 {
 "qualifier": "requiv",
-"component": "starA",
+"component": "primary",
 "kind": "star",
 "context": "component",
 "description": "Equivalent radius",
-"value": 1.0,
+"value": 1.5,
 "default_unit": "solRad",
 "limits": [
 1e-06,
@@ -140,11 +140,11 @@ null
 },
 {
 "qualifier": "requiv_max",
-"component": "starA",
+"component": "primary",
 "kind": "star",
 "context": "component",
 "description": "Critical (maximum) value of the equivalent radius for the given morphology",
-"value": 3.429265859647371,
+"value": 1.6724563972838384,
 "default_unit": "solRad",
 "limits": [
 0.0,
@@ -156,11 +156,11 @@ null
 },
 {
 "qualifier": "requiv_min",
-"component": "starA",
+"component": "primary",
 "kind": "star",
 "context": "component",
 "description": "Critical (minimum) value of the equivalent radius for the given morphology",
-"value": 0.1,
+"value": 1.2725418568681297,
 "default_unit": "solRad",
 "limits": [
 0.0,
@@ -173,7 +173,7 @@ null
 },
 {
 "qualifier": "teff",
-"component": "starA",
+"component": "primary",
 "kind": "star",
 "context": "component",
 "description": "Mean effective temperature",
@@ -189,7 +189,7 @@ null
 },
 {
 "qualifier": "abun",
-"component": "starA",
+"component": "primary",
 "kind": "star",
 "context": "component",
 "description": "Abundance/Metallicity",
@@ -205,11 +205,11 @@ null
 },
 {
 "qualifier": "logg",
-"component": "starA",
+"component": "primary",
 "kind": "star",
 "context": "component",
 "description": "logg at requiv",
-"value": 4.438067627303133,
+"value": 4.089736153779247,
 "default_unit": "",
 "limits": [
 null,
@@ -221,7 +221,7 @@ null
 },
 {
 "qualifier": "syncpar",
-"component": "starA",
+"component": "primary",
 "kind": "star",
 "context": "component",
 "description": "Synchronicity parameter",
@@ -238,11 +238,11 @@ null
 },
 {
 "qualifier": "period",
-"component": "starA",
+"component": "primary",
 "kind": "star",
 "context": "component",
 "description": "Rotation period (wrt the sky)",
-"value": 1.0,
+"value": 0.5,
 "default_unit": "d",
 "limits": [
 1e-06,
@@ -255,11 +255,11 @@ null
 },
 {
 "qualifier": "freq",
-"component": "starA",
+"component": "primary",
 "kind": "star",
 "context": "component",
 "description": "Rotation frequency (wrt the sky)",
-"value": 6.283185307179586,
+"value": 12.566370614359172,
 "default_unit": "rad / d",
 "limits": [
 0.0,
@@ -272,7 +272,7 @@ null
 },
 {
 "qualifier": "pitch",
-"component": "starA",
+"component": "primary",
 "kind": "star",
 "context": "component",
 "description": "Pitch of the stellar rotation axis wrt the orbital inclination",
@@ -289,7 +289,7 @@ null
 },
 {
 "qualifier": "yaw",
-"component": "starA",
+"component": "primary",
 "kind": "star",
 "context": "component",
 "description": "Yaw of the stellar rotation axis wrt the orbital longitude of ascending node",
@@ -306,7 +306,7 @@ null
 },
 {
 "qualifier": "incl",
-"component": "starA",
+"component": "primary",
 "kind": "star",
 "context": "component",
 "description": "Inclination of the stellar rotation axis",
@@ -324,7 +324,7 @@ null
 },
 {
 "qualifier": "long_an",
-"component": "starA",
+"component": "primary",
 "kind": "star",
 "context": "component",
 "description": "Longitude of the ascending node (ie. equator) of the star",
@@ -341,21 +341,22 @@ null
 },
 {
 "qualifier": "gravblaw_bol",
-"component": "starA",
+"component": "primary",
 "kind": "star",
 "context": "component",
 "description": "Gravity brightening law",
 "choices": [
-"zeipel",
-"espinosa"
+"VZ",
+"EL_single",
+"EL_binary"
 ],
-"value": "zeipel",
+"value": "VZ",
 "copy_for": false,
 "Class": "ChoiceParameter"
 },
 {
 "qualifier": "gravb_bol",
-"component": "starA",
+"component": "primary",
 "kind": "star",
 "context": "component",
 "description": "Bolometric gravity brightening",
@@ -365,14 +366,14 @@ null
 0.0,
 1.0
 ],
-"visible_if": "gravblaw_bol:zeipel",
+"visible_if": "gravblaw_bol:VZ",
 "copy_for": false,
 "latexfmt": "\\beta_{{ \\mathrm{{bol}}, \\mathrm{{ {component} }} }}",
 "Class": "FloatParameter"
 },
 {
 "qualifier": "irrad_frac_refl_bol",
-"component": "starA",
+"component": "primary",
 "kind": "star",
 "context": "component",
 "description": "ratio of incident bolometric light that is used for reflection/irradiation (heating without redistribution)",
@@ -388,7 +389,7 @@ null
 },
 {
 "qualifier": "irrad_frac_lost_bol",
-"component": "starA",
+"component": "primary",
 "kind": "star",
 "context": "component",
 "description": "ratio of incident bolometric light that is lost/ignored",
@@ -404,7 +405,7 @@ null
 },
 {
 "qualifier": "ld_mode_bol",
-"component": "starA",
+"component": "primary",
 "kind": "star",
 "context": "component",
 "description": "Mode to use for bolometric limb-darkening (used only for irradiation).",
@@ -418,7 +419,7 @@ null
 },
 {
 "qualifier": "ld_func_bol",
-"component": "starA",
+"component": "primary",
 "kind": "star",
 "context": "component",
 "description": "Bolometric limb darkening model (used only for irradiation).",
@@ -435,14 +436,14 @@ null
 },
 {
 "qualifier": "ld_coeffs_source_bol",
-"component": "starA",
+"component": "primary",
 "kind": "star",
 "context": "component",
 "description": "Source for bolometric limb darkening coefficients (used only for irradiation; 'auto' to interpolate from the applicable table according to the 'atm' parameter, or the name of a specific atmosphere table)",
 "choices": [
 "auto",
-"phoenix",
-"ck2004"
+"ck2004",
+"phoenix"
 ],
 "value": "auto",
 "visible_if": "ld_mode_bol:lookup",
@@ -452,7 +453,7 @@ null
 },
 {
 "qualifier": "ld_coeffs_bol",
-"component": "starA",
+"component": "primary",
 "kind": "star",
 "context": "component",
 "description": "Bolometric limb darkening coefficients (used only for irradiation).",
@@ -471,11 +472,11 @@ null
 },
 {
 "qualifier": "mass",
-"component": "starA",
+"component": "primary",
 "kind": "star",
 "context": "component",
 "description": "Mass",
-"value": 1.0,
+"value": 1.0089067893421308,
 "default_unit": "solMass",
 "limits": [
 1e-12,
@@ -483,6 +484,857 @@ null
 ],
 "copy_for": false,
 "latexfmt": "M_\\mathrm{{ {component} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "requiv",
+"component": "secondary",
+"kind": "star",
+"context": "component",
+"description": "Equivalent radius",
+"value": 1.4999999999999996,
+"default_unit": "solRad",
+"limits": [
+1e-06,
+null
+],
+"copy_for": false,
+"latexfmt": "R_{{ \\mathrm{{ equiv }}, \\mathrm{{ {component} }} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "requiv_max",
+"component": "secondary",
+"kind": "star",
+"context": "component",
+"description": "Critical (maximum) value of the equivalent radius for the given morphology",
+"value": 1.6724563972838378,
+"default_unit": "solRad",
+"limits": [
+0.0,
+null
+],
+"copy_for": false,
+"latexfmt": "R_{{ \\mathrm{{ equiv }}, \\mathrm{{ max }}, \\mathrm{{ {component} }} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "requiv_min",
+"component": "secondary",
+"kind": "star",
+"context": "component",
+"description": "Critical (minimum) value of the equivalent radius for the given morphology",
+"value": 1.2725418568681297,
+"default_unit": "solRad",
+"limits": [
+0.0,
+null
+],
+"visible_if": "hierarchy.is_contact_binary:True",
+"copy_for": false,
+"latexfmt": "R_{{ \\mathrm{{ equiv }}, \\mathrm{{ min }}, \\mathrm{{ {component} }} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "teff",
+"component": "secondary",
+"kind": "star",
+"context": "component",
+"description": "Mean effective temperature",
+"value": 6000.0,
+"default_unit": "K",
+"limits": [
+300.0,
+null
+],
+"copy_for": false,
+"latexfmt": "T_{{ \\mathrm{{ eff }}, \\mathrm{{ {component} }} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "abun",
+"component": "secondary",
+"kind": "star",
+"context": "component",
+"description": "Abundance/Metallicity",
+"value": 0.0,
+"default_unit": "",
+"limits": [
+null,
+null
+],
+"visible_if": "hierarchy.is_contact_binary:False",
+"copy_for": false,
+"Class": "FloatParameter"
+},
+{
+"qualifier": "logg",
+"component": "secondary",
+"kind": "star",
+"context": "component",
+"description": "logg at requiv",
+"value": 4.089736153779248,
+"default_unit": "",
+"limits": [
+null,
+null
+],
+"copy_for": false,
+"latexfmt": "\\mathrm{{log}}g_\\mathrm{{ {component} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "syncpar",
+"component": "secondary",
+"kind": "star",
+"context": "component",
+"description": "Synchronicity parameter",
+"value": 1.0,
+"default_unit": "",
+"limits": [
+0.0,
+null
+],
+"visible_if": "hierarchy.is_binary:True",
+"copy_for": false,
+"latexfmt": "F_\\mathrm{{ {component} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "period",
+"component": "secondary",
+"kind": "star",
+"context": "component",
+"description": "Rotation period (wrt the sky)",
+"value": 0.5,
+"default_unit": "d",
+"limits": [
+1e-06,
+null
+],
+"copy_for": false,
+"advanced": true,
+"latexfmt": "P_\\mathrm{{ {component} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "freq",
+"component": "secondary",
+"kind": "star",
+"context": "component",
+"description": "Rotation frequency (wrt the sky)",
+"value": 12.566370614359172,
+"default_unit": "rad / d",
+"limits": [
+0.0,
+null
+],
+"copy_for": false,
+"advanced": true,
+"latexfmt": "f_\\mathrm{{ {component} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "pitch",
+"component": "secondary",
+"kind": "star",
+"context": "component",
+"description": "Pitch of the stellar rotation axis wrt the orbital inclination",
+"value": 0.0,
+"default_unit": "deg",
+"limits": [
+null,
+null
+],
+"visible_if": "hierarchy.is_contact_binary:False,hierarchy.is_binary:True",
+"copy_for": false,
+"advanced": true,
+"Class": "FloatParameter"
+},
+{
+"qualifier": "yaw",
+"component": "secondary",
+"kind": "star",
+"context": "component",
+"description": "Yaw of the stellar rotation axis wrt the orbital longitude of ascending node",
+"value": 0.0,
+"default_unit": "deg",
+"limits": [
+null,
+null
+],
+"visible_if": "hierarchy.is_contact_binary:False,hierarchy.is_binary:True",
+"copy_for": false,
+"advanced": true,
+"Class": "FloatParameter"
+},
+{
+"qualifier": "incl",
+"component": "secondary",
+"kind": "star",
+"context": "component",
+"description": "Inclination of the stellar rotation axis",
+"value": 90.0,
+"default_unit": "deg",
+"limits": [
+null,
+null
+],
+"visible_if": "hierarchy.is_contact_binary:False",
+"copy_for": false,
+"advanced": true,
+"latexfmt": "i_\\mathrm{{ {component} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "long_an",
+"component": "secondary",
+"kind": "star",
+"context": "component",
+"description": "Longitude of the ascending node (ie. equator) of the star",
+"value": 0.0,
+"default_unit": "deg",
+"limits": [
+null,
+null
+],
+"visible_if": "hierarchy.is_contact_binary:False",
+"copy_for": false,
+"advanced": true,
+"Class": "FloatParameter"
+},
+{
+"qualifier": "gravblaw_bol",
+"component": "secondary",
+"kind": "star",
+"context": "component",
+"description": "Gravity brightening law",
+"choices": [
+"VZ",
+"EL_single",
+"EL_binary"
+],
+"value": "VZ",
+"copy_for": false,
+"Class": "ChoiceParameter"
+},
+{
+"qualifier": "gravb_bol",
+"component": "secondary",
+"kind": "star",
+"context": "component",
+"description": "Bolometric gravity brightening",
+"value": 0.32,
+"default_unit": "",
+"limits": [
+0.0,
+1.0
+],
+"visible_if": "gravblaw_bol:VZ",
+"copy_for": false,
+"latexfmt": "\\beta_{{ \\mathrm{{bol}}, \\mathrm{{ {component} }} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "irrad_frac_refl_bol",
+"component": "secondary",
+"kind": "star",
+"context": "component",
+"description": "ratio of incident bolometric light that is used for reflection/irradiation (heating without redistribution)",
+"value": 0.6,
+"default_unit": "",
+"limits": [
+0.0,
+1.0
+],
+"copy_for": false,
+"latexfmt": "A_{{ \\mathrm{{bol}}, \\mathrm{{ {component} }} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "irrad_frac_lost_bol",
+"component": "secondary",
+"kind": "star",
+"context": "component",
+"description": "ratio of incident bolometric light that is lost/ignored",
+"value": 0.4,
+"default_unit": "",
+"limits": [
+0.0,
+1.0
+],
+"copy_for": false,
+"advanced": true,
+"Class": "FloatParameter"
+},
+{
+"qualifier": "ld_mode_bol",
+"component": "secondary",
+"kind": "star",
+"context": "component",
+"description": "Mode to use for bolometric limb-darkening (used only for irradiation).",
+"choices": [
+"lookup",
+"manual"
+],
+"value": "lookup",
+"copy_for": false,
+"Class": "ChoiceParameter"
+},
+{
+"qualifier": "ld_func_bol",
+"component": "secondary",
+"kind": "star",
+"context": "component",
+"description": "Bolometric limb darkening model (used only for irradiation).",
+"choices": [
+"linear",
+"logarithmic",
+"quadratic",
+"square_root",
+"power"
+],
+"value": "logarithmic",
+"copy_for": false,
+"Class": "ChoiceParameter"
+},
+{
+"qualifier": "ld_coeffs_source_bol",
+"component": "secondary",
+"kind": "star",
+"context": "component",
+"description": "Source for bolometric limb darkening coefficients (used only for irradiation; 'auto' to interpolate from the applicable table according to the 'atm' parameter, or the name of a specific atmosphere table)",
+"choices": [
+"auto",
+"ck2004",
+"phoenix"
+],
+"value": "auto",
+"visible_if": "ld_mode_bol:lookup",
+"copy_for": false,
+"advanced": true,
+"Class": "ChoiceParameter"
+},
+{
+"qualifier": "ld_coeffs_bol",
+"component": "secondary",
+"kind": "star",
+"context": "component",
+"description": "Bolometric limb darkening coefficients (used only for irradiation).",
+"value": [
+0.5,
+0.5
+],
+"default_unit": "",
+"visible_if": "ld_mode_bol:manual",
+"required_shape": [
+null
+],
+"copy_for": false,
+"latexfmt": "\\mathrm{{ ldc }}_\\mathrm{{ bol, {component} }}",
+"Class": "FloatArrayParameter"
+},
+{
+"qualifier": "mass",
+"component": "secondary",
+"kind": "star",
+"context": "component",
+"description": "Mass",
+"value": 1.0089067893421308,
+"default_unit": "solMass",
+"limits": [
+1e-12,
+null
+],
+"copy_for": false,
+"latexfmt": "M_\\mathrm{{ {component} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "period",
+"component": "binary",
+"kind": "orbit",
+"context": "component",
+"description": "Orbital period (defined at t0@system, sidereal: wrt the sky)",
+"value": 0.5,
+"default_unit": "d",
+"limits": [
+1e-06,
+null
+],
+"copy_for": false,
+"latexfmt": "P_\\mathrm{{ {component} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "period_anom",
+"component": "binary",
+"kind": "orbit",
+"context": "component",
+"description": "Anomalistic orbital period (defined at t0@system, anomalistic: time between two successive periastron passages)",
+"value": 0.5,
+"default_unit": "d",
+"limits": [
+null,
+null
+],
+"visible_if": "dperdt:!0.0",
+"copy_for": false,
+"latexfmt": "P_\\mathrm{{anom, {component} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "freq",
+"component": "binary",
+"kind": "orbit",
+"context": "component",
+"description": "Orbital frequency (sidereal)",
+"value": 12.566370614359172,
+"default_unit": "rad / d",
+"limits": [
+null,
+null
+],
+"copy_for": false,
+"advanced": true,
+"latexfmt": "f_\\mathrm{{ {component} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "dpdt",
+"component": "binary",
+"kind": "orbit",
+"context": "component",
+"description": "Time derivative of orbital period (anomalistic), where period is defined at t0@system",
+"value": 0.0,
+"default_unit": "s / yr",
+"limits": [
+null,
+null
+],
+"copy_for": false,
+"advanced": true,
+"latexfmt": "\\dot{{P}}_\\mathrm{{ {component} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "per0",
+"component": "binary",
+"kind": "orbit",
+"context": "component",
+"description": "Argument of periastron (defined at time t0@system)",
+"value": 0.0,
+"default_unit": "deg",
+"limits": [
+null,
+null
+],
+"copy_for": false,
+"latexfmt": "\\omega_{{0, \\mathrm{{ {component} }} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "dperdt",
+"component": "binary",
+"kind": "orbit",
+"context": "component",
+"description": "Time derivative of argument of periastron, where per0 is defined at t0@system",
+"value": 0.0,
+"default_unit": "deg / yr",
+"limits": [
+null,
+null
+],
+"copy_for": false,
+"advanced": true,
+"latexfmt": "\\dot{{\\omega}}_{{0, \\mathrm{{ {component} }}}}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "ecc",
+"component": "binary",
+"kind": "orbit",
+"context": "component",
+"description": "Eccentricity",
+"value": 0.0,
+"default_unit": "",
+"limits": [
+0.0,
+0.999999
+],
+"copy_for": false,
+"latexfmt": "e_\\mathrm{{ {component} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "t0_perpass",
+"component": "binary",
+"kind": "orbit",
+"context": "component",
+"description": "Zeropoint date at periastron passage of the primary component",
+"value": -0.125,
+"default_unit": "d",
+"limits": [
+null,
+null
+],
+"copy_for": false,
+"latexfmt": "t_{{0, \\mathrm{{ perpass }}, \\mathrm{{ {component} }} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "t0_supconj",
+"component": "binary",
+"kind": "orbit",
+"context": "component",
+"description": "Zeropoint date at superior conjunction of the primary component",
+"value": 0.0,
+"default_unit": "d",
+"limits": [
+null,
+null
+],
+"copy_for": false,
+"latexfmt": "t_{{0, \\mathrm{{ supconj }}, \\mathrm{{ {component} }} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "t0_ref",
+"component": "binary",
+"kind": "orbit",
+"context": "component",
+"description": "Zeropoint date at reference point for the primary component",
+"value": 0.0,
+"default_unit": "d",
+"limits": [
+null,
+null
+],
+"copy_for": false,
+"latexfmt": "t_{{0, _\\mathrm{{ ref }}, \\mathrm{{ {component} }} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "mean_anom",
+"component": "binary",
+"kind": "orbit",
+"context": "component",
+"description": "Mean anomaly at t0@system",
+"value": 90.0,
+"default_unit": "deg",
+"limits": [
+null,
+null
+],
+"copy_for": false,
+"advanced": true,
+"Class": "FloatParameter"
+},
+{
+"qualifier": "incl",
+"component": "binary",
+"kind": "orbit",
+"context": "component",
+"description": "Orbital inclination angle",
+"value": 90.0,
+"default_unit": "deg",
+"limits": [
+0.0,
+180.0
+],
+"copy_for": false,
+"latexfmt": "i_\\mathrm{{ {component} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "q",
+"component": "binary",
+"kind": "orbit",
+"context": "component",
+"description": "Mass ratio",
+"value": 1.0,
+"default_unit": "",
+"limits": [
+0.0,
+null
+],
+"copy_for": false,
+"latexfmt": "q_\\mathrm{{ {component} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "sma",
+"component": "binary",
+"kind": "orbit",
+"context": "component",
+"description": "Semi-major axis of the orbit (defined at time t0@system)",
+"value": 3.35,
+"default_unit": "solRad",
+"limits": [
+0.0,
+null
+],
+"copy_for": false,
+"latexfmt": "a_\\mathrm{{ {component} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "long_an",
+"component": "binary",
+"kind": "orbit",
+"context": "component",
+"description": "Longitude of the ascending node",
+"value": 0.0,
+"default_unit": "deg",
+"limits": [
+null,
+null
+],
+"copy_for": false,
+"latexfmt": "\\Omega_\\mathrm{{ {component} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "asini",
+"component": "binary",
+"kind": "orbit",
+"context": "component",
+"description": "Projected semi major axis",
+"value": 3.35,
+"default_unit": "solRad",
+"limits": [
+null,
+null
+],
+"copy_for": false,
+"latexfmt": "a_\\mathrm{{ {component} }} \\sin i_\\mathrm{{ {component} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "ecosw",
+"component": "binary",
+"kind": "orbit",
+"context": "component",
+"description": "Eccentricity times cos of argument of periastron",
+"value": 0.0,
+"default_unit": "",
+"limits": [
+-1.0,
+1.0
+],
+"copy_for": false,
+"latexfmt": "e_\\mathrm{{ {component} }} \\cos \\omega_0",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "esinw",
+"component": "binary",
+"kind": "orbit",
+"context": "component",
+"description": "Eccentricity times sin of argument of periastron",
+"value": 0.0,
+"default_unit": "",
+"limits": [
+-1.0,
+1.0
+],
+"copy_for": false,
+"latexfmt": "e_\\mathrm{{ {component} }} \\sin \\omega_0",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "abun",
+"component": "contact_envelope",
+"kind": "envelope",
+"context": "component",
+"description": "Abundance/Metallicity",
+"value": 0.0,
+"default_unit": "",
+"limits": [
+null,
+null
+],
+"copy_for": false,
+"Class": "FloatParameter"
+},
+{
+"qualifier": "fillout_factor",
+"component": "contact_envelope",
+"kind": "envelope",
+"context": "component",
+"description": "Fillout-factor of the envelope",
+"value": 0.6417897080770943,
+"default_unit": "",
+"limits": [
+0.0,
+1.0
+],
+"copy_for": false,
+"latexfmt": "\\mathrm{{FF}}_\\mathrm{{ {component} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "pot",
+"component": "contact_envelope",
+"kind": "envelope",
+"context": "component",
+"description": "Potential of the envelope (from the primary component's reference)",
+"value": 3.401377407229877,
+"default_unit": "",
+"limits": [
+0.0,
+null
+],
+"copy_for": false,
+"latexfmt": "\\Omega_\\mathrm{{ {component} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "pot_min",
+"component": "contact_envelope",
+"kind": "envelope",
+"context": "component",
+"description": "Critical (minimum) value of the potential to remain a contact",
+"value": 3.2067962240861534,
+"default_unit": "",
+"limits": [
+0.0,
+null
+],
+"copy_for": false,
+"latexfmt": "\\Omega_\\mathrm{{ min,  {component} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "pot_max",
+"component": "contact_envelope",
+"kind": "envelope",
+"context": "component",
+"description": "Critical (maximum) value of the potential to remain a contact",
+"value": 3.75,
+"default_unit": "",
+"limits": [
+0.0,
+null
+],
+"copy_for": false,
+"latexfmt": "\\Omega_\\mathrm{{ max, {component} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "teffratio",
+"component": "binary",
+"kind": "orbit",
+"context": "component",
+"description": "ratio between effective temperatures of children stars",
+"value": 1.0,
+"default_unit": "",
+"limits": [
+0.0,
+null
+],
+"copy_for": false,
+"latexfmt": "T_\\mathrm{{ eff, {children1} }} / T_\\mathrm{{ eff, {children0} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "requivratio",
+"component": "binary",
+"kind": "orbit",
+"context": "component",
+"description": "ratio between equivalent radii of children stars",
+"value": 0.9999999999999997,
+"default_unit": "",
+"limits": [
+0.0,
+null
+],
+"copy_for": false,
+"latexfmt": "R_\\mathrm{{ equiv, {children1} }} / R_\\mathrm{{ equiv, {children0} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "requivsumfrac",
+"component": "binary",
+"kind": "orbit",
+"context": "component",
+"description": "sum of fractional equivalent radii of children stars",
+"value": 0.8955223880597013,
+"default_unit": "",
+"limits": [
+0.0,
+null
+],
+"copy_for": false,
+"latexfmt": "(R_\\mathrm{{ equiv, {children0} }} + R_\\mathrm{{ equiv, {children1} }}) / a_\\mathrm{{ {component} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "sma",
+"component": "primary",
+"kind": "star",
+"context": "component",
+"description": "Semi major axis of the component in the orbit",
+"value": 1.675,
+"default_unit": "solRad",
+"limits": [
+null,
+null
+],
+"copy_for": false,
+"advanced": true,
+"latexfmt": "a_\\mathrm{{ {component} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "asini",
+"component": "primary",
+"kind": "star",
+"context": "component",
+"description": "Projected semi major axis of the component in the orbit",
+"value": 1.675,
+"default_unit": "solRad",
+"limits": [
+null,
+null
+],
+"copy_for": false,
+"advanced": true,
+"latexfmt": "a_\\mathrm{{ {component} }} \\sin i_\\mathrm{{ {parent} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "sma",
+"component": "secondary",
+"kind": "star",
+"context": "component",
+"description": "Semi major axis of the component in the orbit",
+"value": 1.675,
+"default_unit": "solRad",
+"limits": [
+null,
+null
+],
+"copy_for": false,
+"advanced": true,
+"latexfmt": "a_\\mathrm{{ {component} }}",
+"Class": "FloatParameter"
+},
+{
+"qualifier": "asini",
+"component": "secondary",
+"kind": "star",
+"context": "component",
+"description": "Projected semi major axis of the component in the orbit",
+"value": 1.675,
+"default_unit": "solRad",
+"limits": [
+null,
+null
+],
+"copy_for": false,
+"advanced": true,
+"latexfmt": "a_\\mathrm{{ {component} }} \\sin i_\\mathrm{{ {parent} }}",
 "Class": "FloatParameter"
 },
 {
@@ -500,15 +1352,15 @@ null
 },
 {
 "qualifier": "freq",
-"component": "starA",
+"component": "primary",
 "kind": "star",
 "context": "constraint",
 "description": "expression that determines the constraint",
-"value": "6.28318530717958623e+00 / {period@starA@component}",
+"value": "6.28318530717958623e+00 / {period@primary@component}",
 "default_unit": "rad / d",
 "constraint_func": "freq",
 "constraint_kwargs": {
-"component": "starA"
+"component": "primary"
 },
 "constraint_addl_vars": [],
 "in_solar_units": true,
@@ -516,15 +1368,15 @@ null
 },
 {
 "qualifier": "logg",
-"component": "starA",
+"component": "primary",
 "kind": "star",
 "context": "constraint",
 "description": "expression that determines the constraint",
-"value": "log10((({mass@starA@component} / ({requiv@starA@component} ** 2.000000)) * 2.94220621750441933e+03) * 9.31954089506172778e+00)",
+"value": "log10((({mass@primary@component} / ({requiv@primary@component} ** 2.000000)) * 2.94220621750441933e+03) * 9.31954089506172778e+00)",
 "default_unit": "",
 "constraint_func": "logg",
 "constraint_kwargs": {
-"component": "starA"
+"component": "primary"
 },
 "constraint_addl_vars": [],
 "in_solar_units": true,
@@ -532,15 +1384,443 @@ null
 },
 {
 "qualifier": "irrad_frac_lost_bol",
-"component": "starA",
+"component": "primary",
 "kind": "star",
 "context": "constraint",
 "description": "expression that determines the constraint",
-"value": "1.00000000000000000e+00 - {irrad_frac_refl_bol@starA@component}",
+"value": "1.00000000000000000e+00 - {irrad_frac_refl_bol@primary@component}",
 "default_unit": "",
 "constraint_func": "irrad_frac",
 "constraint_kwargs": {
-"component": "starA"
+"component": "primary"
+},
+"constraint_addl_vars": [],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "freq",
+"component": "secondary",
+"kind": "star",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "6.28318530717958623e+00 / {period@secondary@component}",
+"default_unit": "rad / d",
+"constraint_func": "freq",
+"constraint_kwargs": {
+"component": "secondary"
+},
+"constraint_addl_vars": [],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "logg",
+"component": "secondary",
+"kind": "star",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "log10((({mass@secondary@component} / ({requiv@secondary@component} ** 2.000000)) * 2.94220621750441933e+03) * 9.31954089506172778e+00)",
+"default_unit": "",
+"constraint_func": "logg",
+"constraint_kwargs": {
+"component": "secondary"
+},
+"constraint_addl_vars": [],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "irrad_frac_lost_bol",
+"component": "secondary",
+"kind": "star",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "1.00000000000000000e+00 - {irrad_frac_refl_bol@secondary@component}",
+"default_unit": "",
+"constraint_func": "irrad_frac",
+"constraint_kwargs": {
+"component": "secondary"
+},
+"constraint_addl_vars": [],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "asini",
+"component": "binary",
+"kind": "orbit",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "{sma@binary@component} * (sin({incl@binary@component}))",
+"default_unit": "solRad",
+"constraint_func": "asini",
+"constraint_kwargs": {
+"orbit": "binary"
+},
+"constraint_addl_vars": [],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "t0_perpass",
+"component": "binary",
+"kind": "orbit",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "t0_supconj_to_perpass({t0_supconj@binary@component}, {period@binary@component}, {ecc@binary@component}, {per0@binary@component}, {dpdt@binary@component}, {dperdt@binary@component}, {t0@system})",
+"default_unit": "d",
+"constraint_func": "t0_perpass_supconj",
+"constraint_kwargs": {
+"orbit": "binary"
+},
+"constraint_addl_vars": [],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "t0_ref",
+"component": "binary",
+"kind": "orbit",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "t0_supconj_to_ref({t0_supconj@binary@component}, {period@binary@component}, {ecc@binary@component}, {per0@binary@component}, {dpdt@binary@component}, {dperdt@binary@component}, {t0@system})",
+"default_unit": "d",
+"constraint_func": "t0_ref_supconj",
+"constraint_kwargs": {
+"orbit": "binary"
+},
+"constraint_addl_vars": [],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "period_anom",
+"component": "binary",
+"kind": "orbit",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "{period@binary@component} / ((((-1.00000000000000000e+00 * {period@binary@component}) * {dperdt@binary@component}) / 6.28318530717958623e+00) + 1.00000000000000000e+00)",
+"default_unit": "d",
+"constraint_func": "period_anom",
+"constraint_kwargs": {
+"orbit": "binary"
+},
+"constraint_addl_vars": [],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "mean_anom",
+"component": "binary",
+"kind": "orbit",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "(6.28318530717958623e+00 * ({t0@system} - {t0_perpass@binary@component})) / {period@binary@component}",
+"default_unit": "deg",
+"constraint_func": "mean_anom",
+"constraint_kwargs": {
+"orbit": "binary"
+},
+"constraint_addl_vars": [],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "ecosw",
+"component": "binary",
+"kind": "orbit",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "{ecc@binary@component} * (cos({per0@binary@component}))",
+"default_unit": "",
+"constraint_func": "ecosw",
+"constraint_kwargs": {
+"orbit": "binary"
+},
+"constraint_addl_vars": [
+"esinw@binary@orbit@component",
+"ecosw@binary@orbit@component",
+"ecc@binary@orbit@component",
+"per0@binary@orbit@component"
+],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "esinw",
+"component": "binary",
+"kind": "orbit",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "{ecc@binary@component} * (sin({per0@binary@component}))",
+"default_unit": "",
+"constraint_func": "esinw",
+"constraint_kwargs": {
+"orbit": "binary"
+},
+"constraint_addl_vars": [
+"esinw@binary@orbit@component",
+"ecosw@binary@orbit@component",
+"ecc@binary@orbit@component",
+"per0@binary@orbit@component"
+],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "freq",
+"component": "binary",
+"kind": "orbit",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "6.28318530717958623e+00 / {period@binary@component}",
+"default_unit": "rad / d",
+"constraint_func": "freq",
+"constraint_kwargs": {
+"component": "binary"
+},
+"constraint_addl_vars": [],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "pot",
+"component": "contact_envelope",
+"kind": "envelope",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "requiv_to_pot_contact({requiv@primary@component}, {q@binary@component}, {sma@binary@component}, 1)",
+"default_unit": "",
+"constraint_func": "requiv_to_pot",
+"constraint_kwargs": {
+"component": "primary"
+},
+"constraint_addl_vars": [],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "requiv",
+"component": "secondary",
+"kind": "star",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "pot_to_requiv_contact({pot@contact_envelope@component}, {q@binary@component}, {sma@binary@component}, 2)",
+"default_unit": "solRad",
+"constraint_func": "requiv_to_pot",
+"constraint_kwargs": {
+"component": "secondary"
+},
+"constraint_addl_vars": [],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "fillout_factor",
+"component": "contact_envelope",
+"kind": "envelope",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "pot_to_fillout_factor({q@binary@component}, {pot@contact_envelope@component})",
+"default_unit": "",
+"constraint_func": "fillout_factor",
+"constraint_kwargs": {
+"component": "contact_envelope"
+},
+"constraint_addl_vars": [],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "pot_min",
+"component": "contact_envelope",
+"kind": "envelope",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "potential_contact_L23({q@binary@component})",
+"default_unit": "",
+"constraint_func": "potential_contact_min",
+"constraint_kwargs": {
+"component": "contact_envelope"
+},
+"constraint_addl_vars": [],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "pot_max",
+"component": "contact_envelope",
+"kind": "envelope",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "potential_contact_L1({q@binary@component})",
+"default_unit": "",
+"constraint_func": "potential_contact_max",
+"constraint_kwargs": {
+"component": "contact_envelope"
+},
+"constraint_addl_vars": [],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "teffratio",
+"component": "binary",
+"kind": "orbit",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "{teff@secondary@component} / {teff@primary@component}",
+"default_unit": "",
+"constraint_func": "teffratio",
+"constraint_kwargs": {
+"orbit": "binary"
+},
+"constraint_addl_vars": [],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "requivratio",
+"component": "binary",
+"kind": "orbit",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "{requiv@secondary@component} / {requiv@primary@component}",
+"default_unit": "",
+"constraint_func": "requivratio",
+"constraint_kwargs": {
+"orbit": "binary"
+},
+"constraint_addl_vars": [
+"requivratio@binary@orbit@component",
+"requiv@primary@star@component",
+"requiv@secondary@star@component",
+"sma@binary@orbit@component",
+"requivsumfrac@binary@orbit@component"
+],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "requivsumfrac",
+"component": "binary",
+"kind": "orbit",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "({requiv@primary@component} + {requiv@secondary@component}) / {sma@binary@component}",
+"default_unit": "",
+"constraint_func": "requivsumfrac",
+"constraint_kwargs": {
+"orbit": "binary"
+},
+"constraint_addl_vars": [
+"requivratio@binary@orbit@component",
+"requivsumfrac@binary@orbit@component",
+"requiv@primary@star@component",
+"requiv@secondary@star@component",
+"sma@binary@orbit@component"
+],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "mass",
+"component": "primary",
+"kind": "star",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "(3.94784176043574320e+01 * ({sma@binary@component} ** 3.000000)) / ((({period@binary@component} ** 2.000000) * ({q@binary@component} + 1.000000)) * 2.94220621750441933e+03)",
+"default_unit": "solMass",
+"constraint_func": "mass",
+"constraint_kwargs": {
+"component": "primary"
+},
+"constraint_addl_vars": [
+"mass@primary@star@component",
+"mass@secondary@star@component",
+"period@binary@orbit@component",
+"sma@binary@orbit@component",
+"q@binary@orbit@component"
+],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "sma",
+"component": "primary",
+"kind": "star",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "{sma@binary@component} / ((1.00000000000000000e+00 / {q@binary@component}) + 1.00000000000000000e+00)",
+"default_unit": "solRad",
+"constraint_func": "comp_sma",
+"constraint_kwargs": {
+"component": "primary"
+},
+"constraint_addl_vars": [],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "asini",
+"component": "primary",
+"kind": "star",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "({sma@binary@component} * (sin({incl@binary@component}))) / ((1.00000000000000000e+00 / {q@binary@component}) + 1.00000000000000000e+00)",
+"default_unit": "solRad",
+"constraint_func": "comp_asini",
+"constraint_kwargs": {
+"component": "primary"
+},
+"constraint_addl_vars": [],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "period",
+"component": "primary",
+"kind": "star",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "{period@binary@component} / {syncpar@primary@component}",
+"default_unit": "d",
+"constraint_func": "rotation_period",
+"constraint_kwargs": {
+"component": "primary"
+},
+"constraint_addl_vars": [],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "incl",
+"component": "primary",
+"kind": "star",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "{incl@binary@component} + {pitch@primary@component}",
+"default_unit": "deg",
+"constraint_func": "pitch",
+"constraint_kwargs": {
+"component": "primary"
+},
+"constraint_addl_vars": [],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "long_an",
+"component": "primary",
+"kind": "star",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "{long_an@binary@component} + {yaw@primary@component}",
+"default_unit": "deg",
+"constraint_func": "yaw",
+"constraint_kwargs": {
+"component": "primary"
 },
 "constraint_addl_vars": [],
 "in_solar_units": true,
@@ -548,15 +1828,165 @@ null
 },
 {
 "qualifier": "requiv_max",
-"component": "starA",
+"component": "primary",
 "kind": "star",
 "context": "constraint",
 "description": "expression that determines the constraint",
-"value": "8.14885676770049971e-01 * (((2.94220621750441933e+03 * {mass@starA@component}) * (({period@starA@component} / 6.283185) ** 2.00000000000000000e+00)) ** 3.33333333333333315e-01)",
+"value": "requiv_contact_L23({q@binary@component}, {sma@binary@component}, 1)",
 "default_unit": "solRad",
-"constraint_func": "requiv_single_max",
+"constraint_func": "requiv_contact_max",
 "constraint_kwargs": {
-"component": "starA"
+"component": "primary"
+},
+"constraint_addl_vars": [],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "requiv_min",
+"component": "primary",
+"kind": "star",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "requiv_contact_L1({q@binary@component}, {sma@binary@component}, 1)",
+"default_unit": "solRad",
+"constraint_func": "requiv_contact_min",
+"constraint_kwargs": {
+"component": "primary"
+},
+"constraint_addl_vars": [],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "mass",
+"component": "secondary",
+"kind": "star",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "(3.94784176043574320e+01 * ({sma@binary@component} ** 3.000000)) / ((({period@binary@component} ** 2.000000) * ((1.00000000000000000e+00 / {q@binary@component}) + 1.00000000000000000e+00)) * 2.94220621750441933e+03)",
+"default_unit": "solMass",
+"constraint_func": "mass",
+"constraint_kwargs": {
+"component": "secondary"
+},
+"constraint_addl_vars": [
+"mass@secondary@star@component",
+"mass@primary@star@component",
+"period@binary@orbit@component",
+"sma@binary@orbit@component",
+"q@binary@orbit@component"
+],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "sma",
+"component": "secondary",
+"kind": "star",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "{sma@binary@component} / ({q@binary@component} + 1.000000)",
+"default_unit": "solRad",
+"constraint_func": "comp_sma",
+"constraint_kwargs": {
+"component": "secondary"
+},
+"constraint_addl_vars": [],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "asini",
+"component": "secondary",
+"kind": "star",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "({sma@binary@component} * (sin({incl@binary@component}))) / ({q@binary@component} + 1.000000)",
+"default_unit": "solRad",
+"constraint_func": "comp_asini",
+"constraint_kwargs": {
+"component": "secondary"
+},
+"constraint_addl_vars": [],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "period",
+"component": "secondary",
+"kind": "star",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "{period@binary@component} / {syncpar@secondary@component}",
+"default_unit": "d",
+"constraint_func": "rotation_period",
+"constraint_kwargs": {
+"component": "secondary"
+},
+"constraint_addl_vars": [],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "incl",
+"component": "secondary",
+"kind": "star",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "{incl@binary@component} + {pitch@secondary@component}",
+"default_unit": "deg",
+"constraint_func": "pitch",
+"constraint_kwargs": {
+"component": "secondary"
+},
+"constraint_addl_vars": [],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "long_an",
+"component": "secondary",
+"kind": "star",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "{long_an@binary@component} + {yaw@secondary@component}",
+"default_unit": "deg",
+"constraint_func": "yaw",
+"constraint_kwargs": {
+"component": "secondary"
+},
+"constraint_addl_vars": [],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "requiv_max",
+"component": "secondary",
+"kind": "star",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "requiv_contact_L23({q@binary@component}, {sma@binary@component}, 2)",
+"default_unit": "solRad",
+"constraint_func": "requiv_contact_max",
+"constraint_kwargs": {
+"component": "secondary"
+},
+"constraint_addl_vars": [],
+"in_solar_units": true,
+"Class": "ConstraintParameter"
+},
+{
+"qualifier": "requiv_min",
+"component": "secondary",
+"kind": "star",
+"context": "constraint",
+"description": "expression that determines the constraint",
+"value": "requiv_contact_L1({q@binary@component}, {sma@binary@component}, 2)",
+"default_unit": "solRad",
+"constraint_func": "requiv_contact_min",
+"constraint_kwargs": {
+"component": "secondary"
 },
 "constraint_addl_vars": [],
 "in_solar_units": true,
@@ -770,7 +2200,7 @@ null,
 "wilson",
 "horvat"
 ],
-"value": "none",
+"value": "horvat",
 "copy_for": false,
 "Class": "ChoiceParameter"
 },
@@ -844,7 +2274,7 @@ null
 "sphere",
 "none"
 ],
-"value": "rotstar",
+"value": "roche",
 "visible_if": "mesh_method:marching,hierarchy.is_meshable:true",
 "copy_for": {
 "kind": [
@@ -892,11 +2322,11 @@ null
 "context": "compute",
 "description": "Atmosphere table",
 "choices": [
-"ck2004",
-"blackbody",
 "extern_atmx",
 "extern_planckint",
-"phoenix"
+"phoenix",
+"ck2004",
+"blackbody"
 ],
 "value": "ck2004",
 "copy_for": {
@@ -933,7 +2363,7 @@ null
 "compute": "phoebe01",
 "kind": "phoebe",
 "context": "compute",
-"description": "Number of times to sample per-datapoint for finite-time integration",
+"description": "Number of times to sample per-datapoint for finite-time integration (when non-zero exptime)",
 "value": 5,
 "limits": [
 1,
@@ -993,7 +2423,37 @@ null
 },
 {
 "qualifier": "mesh_method",
-"component": "starA",
+"component": "primary",
+"compute": "phoebe01",
+"kind": "phoebe",
+"context": "compute",
+"description": "Which method to use for discretizing the surface",
+"choices": [
+"marching"
+],
+"value": "marching",
+"visible_if": "hierarchy.is_meshable:true",
+"copy_for": false,
+"Class": "ChoiceParameter"
+},
+{
+"qualifier": "mesh_method",
+"component": "secondary",
+"compute": "phoebe01",
+"kind": "phoebe",
+"context": "compute",
+"description": "Which method to use for discretizing the surface",
+"choices": [
+"marching"
+],
+"value": "marching",
+"visible_if": "hierarchy.is_meshable:true",
+"copy_for": false,
+"Class": "ChoiceParameter"
+},
+{
+"qualifier": "mesh_method",
+"component": "contact_envelope",
 "compute": "phoebe01",
 "kind": "phoebe",
 "context": "compute",
@@ -1008,7 +2468,7 @@ null
 },
 {
 "qualifier": "ntriangles",
-"component": "starA",
+"component": "primary",
 "compute": "phoebe01",
 "kind": "phoebe",
 "context": "compute",
@@ -1023,8 +2483,40 @@ null
 "Class": "IntParameter"
 },
 {
+"qualifier": "ntriangles",
+"component": "secondary",
+"compute": "phoebe01",
+"kind": "phoebe",
+"context": "compute",
+"description": "Requested number of triangles (won't be exact).",
+"value": 1500,
+"limits": [
+100,
+null
+],
+"visible_if": "mesh_method:marching,hierarchy.is_meshable:true",
+"copy_for": false,
+"Class": "IntParameter"
+},
+{
+"qualifier": "ntriangles",
+"component": "contact_envelope",
+"compute": "phoebe01",
+"kind": "phoebe",
+"context": "compute",
+"description": "Requested number of triangles (won't be exact).",
+"value": 3000,
+"limits": [
+100,
+null
+],
+"visible_if": "mesh_method:marching,hierarchy.is_meshable:true",
+"copy_for": false,
+"Class": "IntParameter"
+},
+{
 "qualifier": "distortion_method",
-"component": "starA",
+"component": "primary",
 "compute": "phoebe01",
 "kind": "phoebe",
 "context": "compute",
@@ -1035,24 +2527,60 @@ null
 "sphere",
 "none"
 ],
-"value": "rotstar",
+"value": "roche",
+"visible_if": "mesh_method:marching,hierarchy.is_meshable:true",
+"copy_for": false,
+"Class": "ChoiceParameter"
+},
+{
+"qualifier": "distortion_method",
+"component": "secondary",
+"compute": "phoebe01",
+"kind": "phoebe",
+"context": "compute",
+"description": "Method to use for distorting stars",
+"choices": [
+"roche",
+"rotstar",
+"sphere",
+"none"
+],
+"value": "roche",
 "visible_if": "mesh_method:marching,hierarchy.is_meshable:true",
 "copy_for": false,
 "Class": "ChoiceParameter"
 },
 {
 "qualifier": "atm",
-"component": "starA",
+"component": "primary",
 "compute": "phoebe01",
 "kind": "phoebe",
 "context": "compute",
 "description": "Atmosphere table",
 "choices": [
-"ck2004",
-"blackbody",
 "extern_atmx",
 "extern_planckint",
-"phoenix"
+"phoenix",
+"ck2004",
+"blackbody"
+],
+"value": "ck2004",
+"copy_for": false,
+"Class": "ChoiceParameter"
+},
+{
+"qualifier": "atm",
+"component": "secondary",
+"compute": "phoebe01",
+"kind": "phoebe",
+"context": "compute",
+"description": "Atmosphere table",
+"choices": [
+"extern_atmx",
+"extern_planckint",
+"phoenix",
+"ck2004",
+"blackbody"
 ],
 "value": "ck2004",
 "copy_for": false,
@@ -1086,7 +2614,7 @@ null
 },
 {
 "qualifier": "latex_repr",
-"component": "starA",
+"component": "primary",
 "kind": "star",
 "context": "figure",
 "description": "Representation to use in place of the component label when rendering latex representations of parameters.  If blank, will use the labels directly.",
@@ -1096,7 +2624,7 @@ null
 },
 {
 "qualifier": "color",
-"component": "starA",
+"component": "primary",
 "kind": "star",
 "context": "figure",
 "description": "Color to use for figures in which color_source is set to component",
@@ -1117,7 +2645,7 @@ null
 },
 {
 "qualifier": "marker",
-"component": "starA",
+"component": "primary",
 "kind": "star",
 "context": "figure",
 "description": "Marker (datasets only, not models) to use for figures in which marker_source is set to component",
@@ -1144,7 +2672,7 @@ null
 },
 {
 "qualifier": "linestyle",
-"component": "starA",
+"component": "primary",
 "kind": "star",
 "context": "figure",
 "description": "Linestyle to use for figures in which linestyle_source is set to component",
@@ -1160,10 +2688,105 @@ null
 "Class": "ChoiceParameter"
 },
 {
+"qualifier": "latex_repr",
+"component": "secondary",
+"kind": "star",
+"context": "figure",
+"description": "Representation to use in place of the component label when rendering latex representations of parameters.  If blank, will use the labels directly.",
+"value": "",
+"copy_for": false,
+"Class": "StringParameter"
+},
+{
+"qualifier": "color",
+"component": "secondary",
+"kind": "star",
+"context": "figure",
+"description": "Color to use for figures in which color_source is set to component",
+"choices": [
+"black",
+"blue",
+"orange",
+"green",
+"red",
+"purple",
+"ping",
+"pink",
+"yellow"
+],
+"value": "orange",
+"copy_for": false,
+"Class": "ChoiceParameter"
+},
+{
+"qualifier": "marker",
+"component": "secondary",
+"kind": "star",
+"context": "figure",
+"description": "Marker (datasets only, not models) to use for figures in which marker_source is set to component",
+"choices": [
+"None",
+".",
+"o",
+"+",
+"s",
+"*",
+"x",
+"v",
+"^",
+"<",
+">",
+"p",
+"h",
+"o",
+"D"
+],
+"value": "o",
+"copy_for": false,
+"Class": "ChoiceParameter"
+},
+{
+"qualifier": "linestyle",
+"component": "secondary",
+"kind": "star",
+"context": "figure",
+"description": "Linestyle to use for figures in which linestyle_source is set to component",
+"choices": [
+"None",
+"solid",
+"dashed",
+"dotted",
+"dashdot"
+],
+"value": "dashed",
+"copy_for": false,
+"Class": "ChoiceParameter"
+},
+{
+"qualifier": "latex_repr",
+"component": "binary",
+"kind": "orbit",
+"context": "figure",
+"description": "Representation to use in place of the component label when rendering latex representations of parameters.  If blank, will use the labels directly.",
+"value": "",
+"copy_for": false,
+"Class": "StringParameter"
+},
+{
+"qualifier": "latex_repr",
+"component": "contact_envelope",
+"kind": "envelope",
+"context": "figure",
+"description": "Representation to use in place of the component label when rendering latex representations of parameters.  If blank, will use the labels directly.",
+"value": "",
+"copy_for": false,
+"Class": "StringParameter"
+},
+{
 "qualifier": "phoebe_version",
 "context": "setting",
 "description": "Version of PHOEBE",
-"value": "2.4.17",
+"value": "2.4.22",
 "copy_for": false,
 "readonly": true,
 "advanced": true,
